@@ -1,0 +1,18 @@
+Description:
+	Save Gnome Files (Nautilus) file manager window locations and folders.
+	
+Usage:
+    Install wmctrl package
+    Install python-nautilus package
+    python2 setup.py
+    
+Manual install:
+    Place this script in the users home ~/.local/share/nautilus-python/extensions/
+    chmod u+x ~/.local/share/nautilus-python/extensions/window-monitor.py
+    Place the other 2 scripts in user home ~/.local/share/nautilus-python/
+    chmod u+x ~/.local/share/nautilus-python/window-monitor-*.py
+    Run the Startup Applications program
+        Click Add button
+        Name: 'Folder Save'
+        Command: browse to home ~/.local/share/nautilus-python/ and select window-monitor-login.py
+        Click Add button

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<project default="main" basedir=".">
+   <property name="version_major" value="1"/>
+   <property name="version_minor" value="0"/>
+   <property name="src" location="src"/>
+   <property name="dist" location="dist"/>
+	
+   <target name="main" >
+ 	  <tar destfile="${dist}/nautilus-window-monitor-${version_major}.${version_minor}.tar">
+         <tarfileset dir="${src}"
+ 	               prefix="nautilus-window-monitor-${version_major}.${version_minor}/"
+ 	               preserveLeadingSlashes="true">
+            <include name="*"/>
+         </tarfileset>
+ 	  </tar>
+ 	  <gzip destfile="${dist}/nautilus-window-monitor-${version_major}.${version_minor}.tar.gz"
+ 	  		src="${dist}/nautilus-window-monitor-${version_major}.${version_minor}.tar"/>
+   	  <delete file="${dist}/nautilus-window-monitor-${version_major}.${version_minor}.tar"/>
+   </target>
+</project>
