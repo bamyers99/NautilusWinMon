@@ -25,7 +25,7 @@ from time import sleep
 
 # Read the saved windows
 try:
-    file = open(os.path.expanduser("~/.config/location-monitor"), "r")
+    file = open(os.path.expanduser("~/.config/nautilus-window-monitor.conf"), "r")
 except IOError:
     exit(0)
     
