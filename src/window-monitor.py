@@ -21,14 +21,18 @@ limitations under the License.
 from gi.repository import Nautilus, GObject
 import subprocess, os.path
 
-class LocationMonitorExtension(GObject.GObject, Nautilus.LocationWidgetProvider):    
-    
-    def __init__(self):
-        pass
-    
-    def get_widget(self, uri, window):
-        # Note: dbus must be called asynchronously otherwise it would deadlock from Nautilus trying to talk to itself.
-        exe = os.path.expanduser("~/.local/share/nautilus-python/window-monitor-helper.py")
-        process = subprocess.Popen(exe)
-        return None
+class LocationMonitorExtension(GObject.GObject, Nautilus.LocationWidgetProvider):
 
+    def __init__(self):
+        windows = []
+
+    def get_widget(self, uri, window):
+        # Skip initial setting
+        if window in windows:
+            # Note: dbus must be called asynchronously otherwise it would deadlock from Nautilus trying to talk to itself.
+            exe = os.path.expanduser("~/.local/share/nautilus-python/window-monitor-helper.py")
+            process = subprocess.Popen(exe)
+        else:
+            windows.append(window)
+
+        return None

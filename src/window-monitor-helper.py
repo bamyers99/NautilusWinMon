@@ -53,11 +53,14 @@ def saveLocs():
     for windid, folders in locs.items():
         #print windid, '=', folders[0]
         Xwininfo = \
-            check_output("xwininfo -frame -id %s" %windid, shell=True)
+            check_output("xwininfo -stats -wm -id %s" %windid, shell=True)
+        match = re.search(r'Frame extents:\s*(\d+),\s*\d+,\s*(\d+)', Xwininfo) # left, right, top, bottom
+        left = int(match.group(1))
+        top = int(match.group(2))
         match = re.search(r'Absolute upper-left X:\s*(\d+)', Xwininfo)
-        wx = match.group(1)
+        wx = int(match.group(1)) - left
         match = re.search(r'Absolute upper-left Y:\s*(\d+)', Xwininfo)
-        wy = match.group(1)
+        wy = int(match.group(1)) - top
         match = re.search(r'Width:\s*(\d+)', Xwininfo)
         ww = match.group(1)
         match = re.search(r'Height:\s*(\d+)', Xwininfo)

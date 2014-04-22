@@ -62,8 +62,7 @@ for x in range(10):
 # Position the windows
 for windid, folders in locs.items():
     args = winds[folders[0]]
-    #wmctrl -ir <WIN> -e '0,<X>,<Y>,<W>,<H>'
-    cmd = "wmctrl -ir %s -e '0,%s,%s,%s,%s'" % (windid, args[0], args[1], args[2], args[3])
+    #wmctrl -ir <WIN> -e '10,<X>,<Y>,<W>,<H>'
+    cmd = "wmctrl -ir %s -e '10,%s,%s,%s,%s'" % (windid, args[0], args[1], args[2], args[3])
     #print cmd 
     subprocess.call(cmd, shell=True)
-
