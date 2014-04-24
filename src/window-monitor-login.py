@@ -22,6 +22,16 @@ limitations under the License.
 
 import dbus, re, os.path, subprocess
 from time import sleep
+from Xlib.display import Display
+from Xlib.X import StaticGravity
+
+
+def getWin(windid):
+    wnd = dpy.create_resource_object('window', windid)
+    return wnd
+
+
+dpy = Display()
 
 # Read the saved windows
 try:
@@ -42,7 +52,7 @@ for line in lines:
     args = line.strip().split('\t')
     winds[args[0]] = (args[1], args[2], args[3], args[4])
     # Note: The geometry parameter does not work because the windows open too fast.
-    cmd = "nautilus " + args[0]
+    cmd = 'nautilus "' + args[0] + '"'
     subprocess.call(cmd, shell=True)
 
 # Wait for the windows to open
@@ -58,11 +68,18 @@ for x in range(10):
         break
         
     sleep(1)
+    
+# Wait for nautilus windows to get reparented
+sleep(5)
 
 # Position the windows
 for windid, folders in locs.items():
     args = winds[folders[0]]
-    #wmctrl -ir <WIN> -e '10,<X>,<Y>,<W>,<H>'
-    cmd = "wmctrl -ir %s -e '10,%s,%s,%s,%s'" % (windid, args[0], args[1], args[2], args[3])
-    #print cmd 
-    subprocess.call(cmd, shell=True)
+    wnd = getWin(windid)
+    # Change the gravity to static so that we can set an absolute position
+    hints = wnd.get_wm_normal_hints()
+    hints['win_gravity'] = StaticGravity
+    wnd.set_wm_normal_hints(hints)
+    wnd.configure(x=int(args[0]), y=int(args[1]), width=int(args[2]), height=int(args[3]))
+    dpy.flush()
+    

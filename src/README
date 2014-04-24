@@ -2,7 +2,7 @@ Description:
 	Save Gnome Files (Nautilus) file manager window locations and folders.
 	
 Usage:
-    Install wmctrl package
+    Install python-xlib package
     Install python-nautilus package
     python2 setup.py
     

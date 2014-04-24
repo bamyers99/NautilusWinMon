@@ -22,17 +22,15 @@ from gi.repository import Nautilus, GObject
 import subprocess, os.path
 
 class LocationMonitorExtension(GObject.GObject, Nautilus.LocationWidgetProvider):
-
-    def __init__(self):
-        windows = []
+    windows = []
 
     def get_widget(self, uri, window):
         # Skip initial setting
-        if window in windows:
+        if window in LocationMonitorExtension.windows:
             # Note: dbus must be called asynchronously otherwise it would deadlock from Nautilus trying to talk to itself.
             exe = os.path.expanduser("~/.local/share/nautilus-python/window-monitor-helper.py")
-            process = subprocess.Popen(exe)
+            process = subprocess.Popen(exe + ' >/dev/null 2>&1', shell=True)
         else:
-            windows.append(window)
+            LocationMonitorExtension.windows.append(window)
 
         return None

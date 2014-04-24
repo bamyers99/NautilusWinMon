@@ -21,8 +21,29 @@ limitations under the License.
 """
 
 import dbus, re, os.path
-from subprocess import check_output
 from time import sleep
+from Xlib.display import Display
+
+
+# Get window position
+def getPos(windid):
+    wnd = dpy.create_resource_object('window', windid)
+    geom = wnd.get_geometry()
+    x = geom.x
+    y = geom.y
+    width = geom.width
+    height = geom.height
+    
+    # Iterate to the top window
+    tree = wnd.query_tree()
+    while tree.parent.id != tree.root.id:
+        wnd = tree.parent
+        geom = wnd.get_geometry()
+        x += geom.x
+        y += geom.y
+        tree = wnd.query_tree()
+
+    return {'x': x, 'y': y, 'width': width, 'height': height}
 
 # Get nautilus window info 
 def getLocs():
@@ -52,20 +73,8 @@ def saveLocs():
 
     for windid, folders in locs.items():
         #print windid, '=', folders[0]
-        Xwininfo = \
-            check_output("xwininfo -stats -wm -id %s" %windid, shell=True)
-        match = re.search(r'Frame extents:\s*(\d+),\s*\d+,\s*(\d+)', Xwininfo) # left, right, top, bottom
-        left = int(match.group(1))
-        top = int(match.group(2))
-        match = re.search(r'Absolute upper-left X:\s*(\d+)', Xwininfo)
-        wx = int(match.group(1)) - left
-        match = re.search(r'Absolute upper-left Y:\s*(\d+)', Xwininfo)
-        wy = int(match.group(1)) - top
-        match = re.search(r'Width:\s*(\d+)', Xwininfo)
-        ww = match.group(1)
-        match = re.search(r'Height:\s*(\d+)', Xwininfo)
-        wh = match.group(1)
-        string = '%s\t%s\t%s\t%s\t%s\n' %(folders[0], wx, wy, ww, wh)
+        attr = getPos(windid)
+        string = '%s\t%d\t%d\t%d\t%d\n' %(folders[0], attr['x'], attr['y'], attr['width'], attr['height'])
         file.write(string)
 
     file.close()
@@ -73,5 +82,6 @@ def saveLocs():
 
 # Give nautilus time to change directories
 sleep(2)
+dpy = Display()
 saveLocs()
 
