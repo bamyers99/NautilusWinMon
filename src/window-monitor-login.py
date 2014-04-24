@@ -66,7 +66,7 @@ for x in range(10):
         
     if len(locs) == len(lines):
         break
-        
+
     sleep(1)
     
 # Wait for nautilus windows to get reparented

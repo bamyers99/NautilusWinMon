@@ -20,7 +20,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import dbus, re, os.path
+import dbus, re, os, os.path
 from time import sleep
 from Xlib.display import Display
 
@@ -68,8 +68,9 @@ def saveLocs():
     locs = getLocs()
     if len(locs) == 0:
         return
-
-    file = open(os.path.expanduser("~/.config/nautilus-window-monitor.conf"), "w")
+    conf = os.path.expanduser("~/.config/nautilus-window-monitor.conf")
+    os.remove(conf) # incase multiple helpers running
+    file = open(conf, "w")
 
     for windid, folders in locs.items():
         #print windid, '=', folders[0]

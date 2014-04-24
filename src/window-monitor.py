@@ -29,7 +29,7 @@ class LocationMonitorExtension(GObject.GObject, Nautilus.LocationWidgetProvider)
         if window in LocationMonitorExtension.windows:
             # Note: dbus must be called asynchronously otherwise it would deadlock from Nautilus trying to talk to itself.
             exe = os.path.expanduser("~/.local/share/nautilus-python/window-monitor-helper.py")
-            process = subprocess.Popen(exe + ' >/dev/null 2>&1', shell=True)
+            process = subprocess.Popen('"%s" >/dev/null 2>&1' % (exe), shell=True)
         else:
             LocationMonitorExtension.windows.append(window)
 

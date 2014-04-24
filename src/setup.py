@@ -26,16 +26,18 @@ user = user[-1]
 
 # Copy the extension
 extdir = home + '.local/share/nautilus-python/extensions/'
-cmd = 'cp window-monitor.py %s' % (extdir)
+cmd = 'mkdir -p "%s"' % (extdir)
 subprocess.call(cmd, shell=True)
-cmd = 'chmod u+x %swindow-monitor.py' % (extdir)
+cmd = 'cp window-monitor.py "%s"' % (extdir)
+subprocess.call(cmd, shell=True)
+cmd = 'chmod u+x "%swindow-monitor.py"' % (extdir)
 subprocess.call(cmd, shell=True)
 
 # Copy the helpers
 npdir = home + '.local/share/nautilus-python/'
-cmd = 'cp window-monitor-*.py %s' % (npdir)
+cmd = 'cp window-monitor-*.py "%s"' % (npdir)
 subprocess.call(cmd, shell=True)
-cmd = 'chmod u+x %swindow-monitor-*.py' % (npdir)
+cmd = 'chmod u+x "%swindow-monitor-*.py"' % (npdir)
 subprocess.call(cmd, shell=True)
 
 # Create conf file
