@@ -14,4 +14,4 @@ See the README file in the distribution bundle.
 
 Version history
 ===============
-* Version 1.0 - Ubuntu 13.10 release - [download](/bamyers99/NautilusWinMon/blob/master/dist/nautilus-window-monitor-1.0.tar.gz)
+* Version 1.0 - Ubuntu 13.10 release - [download](/dist/nautilus-window-monitor-1.0.tar.gz)
