@@ -42,6 +42,9 @@ def getPos(windid):
         x += geom.x
         y += geom.y
         tree = wnd.query_tree()
+        
+    if y < 100:
+        y = 0 # At top of screen
 
     return {'x': x, 'y': y, 'width': width, 'height': height}
 

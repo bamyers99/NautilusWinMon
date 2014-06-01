@@ -2,7 +2,7 @@
 
 <project default="main" basedir=".">
    <property name="version_major" value="1"/>
-   <property name="version_minor" value="0"/>
+   <property name="version_minor" value="1"/>
    <property name="src" location="src"/>
    <property name="dist" location="dist"/>
 	
