@@ -4,6 +4,8 @@ Description:
 Usage:
     Install python-xlib package
     Install python-nautilus package
+    Install python-dbus package
+    Install wmctrl package
     python2 setup.py
     
 Manual install:
